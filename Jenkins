@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    stages {
+        stage('Install Python Libraries') {
+            steps {
+                script {
+                    // Install required Python libraries
+                    sh '''
+                    pip install boto3 pandas python-dotenv
+                    '''
+                }
+            }
+        }
+        stage('Run Metrics Report Script') {
+            steps {
+                script {
+                    // Run the Python script to generate the metrics report and send email
+                    sh 'python3 generate_report.py'
+                }
+            }
+        }
+    }
+    triggers {
+        cron('0 8 * * 1')  // Every Monday at 8 AM
+    }
+    parameters {
+        booleanParam(name: 'MANUAL_BUILD', defaultValue: false, description: 'Trigger the build manually')
+    }
+}
