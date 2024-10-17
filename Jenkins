@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        EMAIL_SOURCE = 'londhekarishma6994@gmail.com'
+        EMAIL_PASSWORD = 'zwftgvcneqnsygwl'
+        EMAIL_RECIPIENT = 'londhe.karishma61@gmail.com'
+    }
     stages {
         stage('Install Python Libraries') {
             steps {
@@ -22,8 +27,5 @@ pipeline {
     }
     triggers {
         cron('0 8 * * 1')  // Every Monday at 8 AM
-    }
-    parameters {
-        booleanParam(name: 'MANUAL_BUILD', defaultValue: false, description: 'Trigger the build manually')
     }
 }
